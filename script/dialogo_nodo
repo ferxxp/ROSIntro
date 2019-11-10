@@ -1,0 +1,21 @@
+#!/usr/bin/env python
+import rospy
+from std_msgs.msg import String
+from interaccion.msg import pos_usuario
+from interaccion.msg import inf_personal_usuario
+from interaccion.msg import usuario
+def callback1(data):
+    print("Name:\t"+data.inf_personal.first_name)
+    print("Age :\t"+str(data.inf_personal.age))
+    print("Speaks :")
+    for lan in data.inf_personal.language:
+        print(lan)
+    print("At :\t"+str(data.posicion.x)+" / "+str(data.posicion.y)+" / "+str(data.posicion.z))
+    print("Thinks : \n" +data.usuario)
+    print("______________________")
+def screen():
+    rospy.init_node('screen', anonymous=True)
+    rospy.Subscriber("user_topic", usuario, callback1)
+    rospy.spin()
+if __name__ == '__main__':
+    screen()

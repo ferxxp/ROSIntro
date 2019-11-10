@@ -1,0 +1,54 @@
+#!/usr/bin/env python
+# license removed for brevity
+import rospy
+from Tkinter import *
+import tkMessageBox
+import ScrolledText as sct
+from std_msgs.msg import String
+
+
+
+def readtext(txtb,pub,rospy):
+
+    #
+    try:
+
+        c=txtb.get(1.0, END)
+        hello_str=String()
+        hello_str.data=c
+        rospy.loginfo(hello_str)
+        pub.publish(hello_str)
+        createMessBox("Success","Datos enviados.")
+        txtb.delete('1.0', END)
+    except:
+
+        createMessBox("Error","Por favor compruebe los datos introducidos.")
+def createMessBox(a,b):
+    tkMessageBox.showinfo(a,b)
+def talker():
+    pub = rospy.Publisher('emocion_topic', String, queue_size=10)
+    rospy.init_node('Valoracion', anonymous=True)
+    rate = rospy.Rate(40) # 40hz
+    window = Tk()
+    window.title("Welcome to Info app")
+    label1=Label(text='Nombre:')
+    label1.grid(column=0, row=0,padx=10, pady=10)
+    txtb=sct.ScrolledText(height='10',width='20');
+    #txtb.insert(INSERT,"I like trains")
+    txtb.grid(column=1, row=0)
+    btn = Button(window, text="Enviar", command= lambda:readtext(txtb,pub,rospy))
+    btn.grid(column=1, row=6,padx=10, pady=10)
+    while not rospy.is_shutdown():
+        try:
+            window.update()
+            window.update_idletasks()
+            rate.sleep()
+        except:
+            break
+
+
+if __name__ == '__main__':
+    try:
+        talker()
+    except rospy.ROSInterruptException:
+        pass

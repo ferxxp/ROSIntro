@@ -1,0 +1,73 @@
+#!/usr/bin/env python
+# license removed for brevity
+import rospy
+from Tkinter import *
+import tkMessageBox
+import ScrolledText as sct
+from interaccion.msg import inf_personal_usuario
+
+
+
+def readtext(txt1,txt2,txtb,pub,rospy):
+
+
+    try:
+        a=txt1.get()
+        b=int(txt2.get())
+        c=txtb.get(1.0, END).upper().splitlines()
+        try:
+            while c.index(""):
+               c.pop(c.index(""))
+        except ValueError:
+            pass
+
+        hello_str=inf_personal_usuario()
+        hello_str.first_name=a
+        hello_str.age=b
+        hello_str.language=c
+        rospy.loginfo(hello_str)
+        pub.publish(hello_str)
+        createMessBox("Success","Datos enviados.")
+        txt1.delete('0', END)
+        txt2.delete('0', END)
+        txtb.delete('1.0', END)
+    except:
+        createMessBox("Error","Por favor compruebe los datos introducidos.")
+    return [txt1,txt2,txtb]
+def createMessBox(a,b):
+    tkMessageBox.showinfo(a,b)
+def talker():
+    pub = rospy.Publisher('inf_pers_topic', inf_personal_usuario, queue_size=10)
+    rospy.init_node('info', anonymous=True)
+    rate = rospy.Rate(40) # 40hz
+    window = Tk()
+    window.title("Welcome to Info app")
+    label1=Label(text='Nombre:')
+    label1.grid(column=0, row=0,padx=10, pady=10)
+    txt1 = Entry(window,width="20")
+    txt1.grid(column=1, row=0,padx=10, pady=10)
+    label1=Label(text='Edad:')
+    label1.grid(column=0, row=2,padx=10, pady=10)
+    txt2 = Entry(window,width='20')
+    txt2.grid(column=1, row=2,padx=10, pady=10)
+    label1=Label(text='Otro:')
+    label1.grid(column=0, row=4,padx=10, pady=10)
+    txtb=sct.ScrolledText(height='10',width='20');
+    #txtb.insert(INSERT,"I like trains")
+    txtb.grid(column=1, row=4)
+    btn = Button(window, text="Enviar", command= lambda:readtext(txt1,txt2,txtb,pub,rospy))
+    btn.grid(column=1, row=6,padx=10, pady=10)
+    while not rospy.is_shutdown():
+        try:
+            window.update()
+            window.update_idletasks()
+            rate.sleep()
+        except:
+            break
+
+
+if __name__ == '__main__':
+    try:
+        talker()
+    except rospy.ROSInterruptException:
+        pass

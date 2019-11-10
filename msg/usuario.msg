@@ -1,0 +1,3 @@
+inf_personal_usuario inf_personal
+string usuario
+pos_usuario posicion
