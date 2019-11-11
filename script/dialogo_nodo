@@ -1,9 +1,18 @@
 #!/usr/bin/env python
 import rospy
 from std_msgs.msg import String
-from interaccion.msg import pos_usuario
-from interaccion.msg import inf_personal_usuario
-from interaccion.msg import usuario
+from interaccion.msg import pos_usuario, inf_personal_usuario, usuario
+from interaccion.srv import multiply
+def multiplyper2srv(x):
+    rospy.wait_for_service('multiplicar')
+    try:
+        add_two_ints = rospy.ServiceProxy('multiplicar', multiply)
+        resp1 = add_two_ints(x)
+        return resp1.resultado
+    except rospy.ServiceException, e:
+        print "Service call failed: %s"%e
+
+
 def callback1(data):
     print("Name:\t"+data.inf_personal.first_name)
     print("Age :\t"+str(data.inf_personal.age))
@@ -12,6 +21,8 @@ def callback1(data):
         print(lan)
     print("At :\t"+str(data.posicion.x)+" / "+str(data.posicion.y)+" / "+str(data.posicion.z))
     print("Thinks : \n" +data.usuario)
+    print("Service returns:")
+    print(str(multiplyper2srv(data.inf_personal.age)))
     print("______________________")
 def screen():
     rospy.init_node('screen', anonymous=True)
