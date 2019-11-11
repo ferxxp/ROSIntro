@@ -169,6 +169,7 @@ include_directories(
     script/Valoracion
     script/Posicion
     script/dialogo_nodo
+    script/reloj_nodo
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
  )
 

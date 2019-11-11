@@ -1,0 +1,44 @@
+#!/usr/bin/env python
+# license removed for brevity
+import rospy
+from std_msgs.msg import String, Bool
+import datetime
+import time
+import configclock1
+
+
+
+def UtcNow():
+    now = datetime.datetime.utcnow()
+    return now
+def LocalNow():
+    now = datetime.datetime.now()
+    return now
+def callback1(data):
+    configclock1.a=True
+    configclock1.start=time.time()
+    configclock1.minutesgone=1
+def clockstarting():
+    rospy.init_node('clock', anonymous=True)
+    pub = rospy.Publisher('still_alive', Bool, queue_size=10)
+    rospy.Subscriber("start_topic", String, callback1)
+    rospy.Subscriber("reset_topic", String, callback1)
+    rate = rospy.Rate(3)
+    msg=Bool()
+    msg.data=True
+    while not rospy.is_shutdown():
+        if configclock1.a:
+            try:
+                if ((-configclock1.start+time.time())/60)>configclock1.minutesgone:
+                    pub.publish(msg)
+                    configclock1.minutesgone=configclock1.minutesgone+1
+                else:
+                    print(str(configclock1.start-time.time()))
+                print(str(UtcNow()))
+                print(str(LocalNow()))
+            except:
+                break
+        rate.sleep()
+
+if __name__ == '__main__':
+    clockstarting()
