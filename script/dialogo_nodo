@@ -1,9 +1,12 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import rospy
 from std_msgs.msg import String, Bool
 from interaccion.msg import pos_usuario, inf_personal_usuario, usuario
 from interaccion.srv import multiply
 import configclock
+import os
+
 def multiplyper2srv(x):
     rospy.wait_for_service('multiplicar')
     try:
@@ -30,6 +33,9 @@ def callback1(data):
     print(str(multiplyper2srv(data.inf_personal.age)))
     print("______________________")
     sendtimer()
+    text= "This is a text to syntetize sintetizar"
+    command = "espeak \"" + text +"\""
+    os.system(str(command));
 def callback2(data):
     if data.data:
         print("\nClock is still alive\n")
