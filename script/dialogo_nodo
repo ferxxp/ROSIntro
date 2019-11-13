@@ -21,24 +21,32 @@ def sendtimer():
         configclock.pubstart.publish(configclock.msgclock)
     else:
         configclock.pubreset.publish(configclock.msgclock)
-def callback1(data):
-    print("Name:\t"+data.inf_personal.first_name)
-    print("Age :\t"+str(data.inf_personal.age))
-    print("Speaks :")
-    for lan in data.inf_personal.language:
-        print(lan)
-    print("At :\t"+str(data.posicion.x)+" / "+str(data.posicion.y)+" / "+str(data.posicion.z))
-    print("Thinks : \n" +data.usuario)
-    print("Service returns:")
-    print(str(multiplyper2srv(data.inf_personal.age)))
-    print("______________________")
-    sendtimer()
-    text= "This is a text to syntetize sintetizar"
-    command = "espeak \"" + text +"\""
+def print_and_read(toread):
+    print(toread)
+    command = "espeak \"" + toread +"\" -v es"
     os.system(str(command));
+def callback1(data):
+    a=""
+    a=a+"\n"+("Name:\t"+data.inf_personal.first_name)
+    a=a+"\n"+("Age :\t"+str(data.inf_personal.age))
+    a=a+"\n"+("Speaks :")
+    for lan in data.inf_personal.language:
+        a=a+"\n"+(lan)
+    a=a+"\n"+("At :\t"+str(data.posicion.x)+" / "+str(data.posicion.y)+" / "+str(data.posicion.z))
+    a=a+"\n"+("Thinks : \n" +data.usuario)
+    a=a+"\n"+("Service returns:")
+    a=a+"\n"+(str(multiplyper2srv(data.inf_personal.age)))
+    a=a+"\n"+("______________________")
+    sendtimer()
+    print_and_read(a)
+
+
 def callback2(data):
     if data.data:
-        print("\nClock is still alive\n")
+        a=("\nClock is still alive\n")
+        print(a)
+        command = "espeak \"" + a +"\" -v es"
+        os.system(str(command));
 
 def screen():
     rospy.init_node('screen', anonymous=True)
