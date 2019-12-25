@@ -18,20 +18,24 @@ def LocalNow():
     now = datetime.datetime.now()
     return now
 def callback1(data):
-    global timerpy
-    if timerpy:
-        print("Block")
-        timerpy.shutdown()
-    timerpy=rospy.Timer(rospy.Duration(60), my_callback)
-    rospy.loginfo("Starting Clock display")
-    configclock1.a=True
-    configclock1.start=time.time()
+    if configclock1.a:
+        global timerpy
+        if timerpy:
+            print("Block")
+            timerpy.shutdown()
+        timerpy=rospy.Timer(rospy.Duration(60), my_callback)
+        rospy.loginfo("Starting Clock display")
+        configclock1.start=time.time()
+def callback2(data):
+    if not configclock1.a:
+        configclock1.a=True
+        callback1(data)
 
 def clockstarting():
     rospy.init_node('clock', anonymous=True)
     global timerpy
     timerpy=None
-    rospy.Subscriber("start_topic", String, callback1)
+    rospy.Subscriber("start_topic", String, callback2)
     rospy.Subscriber("reset_topic", String, callback1)
 
     rate = rospy.Rate(3)

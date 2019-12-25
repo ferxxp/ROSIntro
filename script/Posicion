@@ -11,7 +11,7 @@ from interaccion.msg import pos_usuario
 
 def readtext(txt1,txt2,txt3,pub,rospy):
     #Funcion creada para enviar los datos del formulario al topico correspondiente
-    #try:
+    try:
         a=int(txt1.get())
         b=int(txt2.get())
         c=int(txt3.get())
@@ -25,9 +25,9 @@ def readtext(txt1,txt2,txt3,pub,rospy):
         txt1.delete('0', END)
         txt2.delete('0', END)
         txt3.delete('0', END)
-    # except:
-    #
-    #     createMessBox("Error","Por favor compruebe los datos introducidos.")
+    except:
+
+        createMessBox("Error","Por favor compruebe los datos introducidos.")
 def createMessBox(a,b):
     #funcion para la salida de error o success del envio de la informacion
     tkMessageBox.showinfo(a,b)

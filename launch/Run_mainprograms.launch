@@ -1,0 +1,6 @@
+<launch>
+  <node name="empaquetar" pkg="interaccion" type="empaquetador_nodo"  output="screen"/>
+  <node name="pantalla" pkg="interaccion" type="dialogo_nodo" output="screen" launch-prefix="xterm -e" />
+  <node name="servicio_mat" pkg="interaccion" type="matematico_nodo"  output="screen"/>
+  <node name="reloj" pkg="interaccion" type="reloj_nodo" output="screen" launch-prefix="xterm -e" />
+</launch>

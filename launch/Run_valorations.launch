@@ -1,0 +1,5 @@
+<launch>
+  <node name="info" pkg="interaccion" type="Info" output="screen"/>
+  <node name="valoration" pkg="interaccion" type="Valoracion" output="screen"/>
+  <node name="posicion" pkg="interaccion" type="Posicion" output="screen"/>
+</launch>
