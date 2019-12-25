@@ -25,7 +25,7 @@ def readtext(txt1,txt2,txtb,pub,rospy):
         hello_str.first_name=a
         hello_str.age=b
         hello_str.language=c
-        rospy.loginfo(hello_str)
+        rospy.loginfo("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m"+" envia: "+"\033[1;36;40m"+str(hello_str) +"\033[0m")
         pub.publish(hello_str)
         createMessBox("Success","Datos enviados.")
         txt1.delete('0', END)

@@ -7,6 +7,10 @@ import datetime
 import time
 import configclock1
 
+
+
+def my_callback(event):
+    configclock1.pub.publish(configclock1.msg)
 def UtcNow():
     now = datetime.datetime.utcnow()
     return now
@@ -14,27 +18,36 @@ def LocalNow():
     now = datetime.datetime.now()
     return now
 def callback1(data):
+    global timerpy
+    if timerpy:
+        print("Block")
+        timerpy.shutdown()
+    timerpy=rospy.Timer(rospy.Duration(60), my_callback)
+    rospy.loginfo("Starting Clock display")
     configclock1.a=True
     configclock1.start=time.time()
-    configclock1.minutesgone=1
+
 def clockstarting():
     rospy.init_node('clock', anonymous=True)
-    pub = rospy.Publisher('still_alive', Bool, queue_size=10)
+    global timerpy
+    timerpy=None
     rospy.Subscriber("start_topic", String, callback1)
     rospy.Subscriber("reset_topic", String, callback1)
+
     rate = rospy.Rate(3)
-    msg=Bool()
-    msg.data=True
     while not rospy.is_shutdown():
-        if configclock1.a:
+        if  configclock1.a:
             try:
-                if ((-configclock1.start+time.time())/60)>configclock1.minutesgone:
-                    pub.publish(msg)
-                    configclock1.minutesgone=configclock1.minutesgone+1
-                else:
-                    print(str(configclock1.start-time.time()))
-                print(str(UtcNow()))
-                print(str(LocalNow()))
+
+                # if ((-configclock1.start+time.time())/60)>configclock1.minutesgone:
+                #     pub.publish(msg)
+                #     configclock1.minutesgone=configclock1.minutesgone+1
+                # else:
+                mensaje=""
+                mensaje=mensaje+("Han pasado: "+str(abs(configclock1.start-time.time())))+"\n"
+                mensaje=mensaje+("UTC time:    "+str(UtcNow()))+"\n"
+                mensaje=mensaje+("Local time:  "+str(LocalNow()))+"\n"
+                rospy.loginfo("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m"+ ": "+"\033[1;36;40m"+mensaje+"\033[0m")
             except:
                 break
         rate.sleep()

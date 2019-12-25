@@ -10,42 +10,56 @@ import os
 def multiplyper2srv(x):
     rospy.wait_for_service('multiplicar')
     try:
+        rospy.loginfo("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m"+ ": pidiendo servicio")
         add_two_ints = rospy.ServiceProxy('multiplicar', multiply)
         resp1 = add_two_ints(x)
         return resp1.resultado
     except rospy.ServiceException, e:
-        print "Service call failed: %s"%e
+        rospy.logerr("Service call failed: %s"%e)
 def sendtimer():
     if not configclock.sent_first_message:
         configclock.sent_first_message=True
         configclock.pubstart.publish(configclock.msgclock)
     else:
         configclock.pubreset.publish(configclock.msgclock)
-def print_and_read(toread):
-    print(toread)
-    command = "espeak \"" + toread +"\" -v es"
+def print_and_read(toread,tospeak):
+    rospy.loginfo("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m"+toread)
+    command = "espeak \"" + tospeak +"\" -v es"
     os.system(str(command));
 def callback1(data):
-    a=""
-    a=a+"\n"+("Name:\t"+data.inf_personal.first_name)
-    a=a+"\n"+("Age :\t"+str(data.inf_personal.age))
-    a=a+"\n"+("Speaks :")
+    servresp=str(multiplyper2srv(data.inf_personal.age))
+    ap=""
+    ap=ap+"\n"+("\033[1;33;40m"+"Nombre:\t"+"\033[1;36;40m"+data.inf_personal.first_name+"\n")
+    ap=ap+"\n"+("\033[1;33;40m"+"Edad :\t"+"\033[1;36;40m"+str(data.inf_personal.age)+"\n")
+    ap=ap+"\n"+("\033[1;33;40m"+"Idiomas :")+"\033[1;36;40m"
     for lan in data.inf_personal.language:
-        a=a+"\n"+(lan)
-    a=a+"\n"+("At :\t"+str(data.posicion.x)+" / "+str(data.posicion.y)+" / "+str(data.posicion.z))
-    a=a+"\n"+("Thinks : \n" +data.usuario)
-    a=a+"\n"+("Service returns:")
-    a=a+"\n"+(str(multiplyper2srv(data.inf_personal.age)))
-    a=a+"\n"+("______________________")
+        ap=ap+"\n"+(lan)+"\n"
+    ap=ap+"\n"+("\033[1;33;40m"+"Se encuentra :\t"+"\033[1;36;40m"+str(data.posicion.x)+" / "+str(data.posicion.y)+" / "+str(data.posicion.z)+"\n")
+    ap=ap+"\n"+("\033[1;33;40m"+"Opina : \n" +"\033[1;36;40m"+data.usuario+"\n")
+    ap=ap+"\n"+("\033[1;33;40m"+"Número secreto:")+"\033[1;36;40m"
+    ap=ap+"\n"+(servresp)+"\n"
+    ap=ap+"\n"+("______________________")+"\033[0m"
+
+    ar=""
+    ar=ar+"\n"+("Nombre:\t"+data.inf_personal.first_name+"\n")
+    ar=ar+"\n"+("Edad :\t"+str(data.inf_personal.age)+"\n")
+    ar=ar+"\n"+("Idiomas :")
+    for lan in data.inf_personal.language:
+        ar=ar+"\n"+(lan)+"\n"
+    ar=ar+"\n"+("Se encuentra :\t"+str(data.posicion.x)+" / "+str(data.posicion.y)+" / "+str(data.posicion.z)+"\n")
+    ar=ar+"\n"+("Opina : \n" +data.usuario+"\n")
+    ar=ar+"\n"+("Número secreto:")
+    ar=ar+"\n"+servresp+"\n"
+    ar=ar+"\n"+("______________________")
     sendtimer()
-    print_and_read(a)
+    print_and_read(ap,ar)
 
 
 def callback2(data):
     if data.data:
-        a=("\nClock is still alive\n")
-        print(a)
-        command = "espeak \"" + a +"\" -v es"
+        a=("\033[1;34;40m"+"\nEl reloj sigue en marcha\n"+"\033[0m")
+        rospy.loginfo("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m"+a)
+        command = "espeak \"" + "El reloj sigue en marcha" +"\" -v es"
         os.system(str(command));
 
 def screen():
