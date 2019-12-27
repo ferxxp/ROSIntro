@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 import rospy
 from std_msgs.msg import String, Bool
-from interaccion.msg import pos_usuario, inf_personal_usuario, usuario
+from interaccion.msg import *
 from interaccion.srv import multiply
+import actionlib
 import configclock
 import os
 
@@ -25,7 +26,27 @@ def sendtimer():
 def print_and_read(toread,tospeak):
     rospy.loginfo("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m"+toread)
     command = "espeak \"" + tospeak +"\" -v es"
+    global actionlibclient
+    rospy.loginfo("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m"+" Comienza respuesta a peticion:"+"\033[1;36;40m"+tospeak+"\033[0m")
+    printing=False
+    if actionlibclient.wait_for_server(rospy.Duration(5)):
+        printing=True
+        goal = Actio1Goal()
+        goal.goal_msg=tospeak
+        actionlibclient.send_goal(goal)
+    else:
+        rospy.loginfo("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m"+ " : No se pudo conectar con la impresora.")
+
     os.system(str(command));
+    if printing:
+        if actionlibclient.wait_for_result(rospy.Duration(len(tospeak.splitlines())*5)):
+            rospy.loginfo("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m "+ actionlibclient.get_result().result_msg)
+        else:
+            actionlibclient.cancel_goal()
+            rospy.logerr("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m"+ " Error al imprimir. Por favor compruebe la impresora. ")
+
+
+
 def callback1(data):
     servresp=str(multiplyper2srv(data.inf_personal.age))
     ap=""
@@ -66,6 +87,9 @@ def screen():
     rospy.init_node('screen', anonymous=True)
     rospy.Subscriber("user_topic", usuario, callback1)
     rospy.Subscriber("still_alive", Bool, callback2)
+    global actionlibclient
+    actionlibclient=actionlib.SimpleActionClient('Printer_server', Actio1Action)
+
     rospy.spin()
 if __name__ == '__main__':
     screen()

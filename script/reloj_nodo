@@ -10,6 +10,8 @@ import configclock1
 
 
 def my_callback(event):
+    rospy.loginfo("Still")
+    rospy.loginfo("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m"+"El reloj sigue en marcha.")
     configclock1.pub.publish(configclock1.msg)
 def UtcNow():
     now = datetime.datetime.utcnow()
@@ -24,7 +26,7 @@ def callback1(data):
             print("Block")
             timerpy.shutdown()
         timerpy=rospy.Timer(rospy.Duration(60), my_callback)
-        rospy.loginfo("Starting Clock display")
+        rospy.loginfo("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m"+" Starting Clock display")
         configclock1.start=time.time()
 def callback2(data):
     if not configclock1.a:
