@@ -4,13 +4,14 @@ from interaccion.srv import multiply
 import rospy
 
 def handle(req):
-    print(str(req))
+    rospy.loginfo("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m"+ ": Se ha recibido: "+"\033[1;36;40m"+str(req)+"\033[0m")
+
     return (req.entrada*2)
 
 def multiply_per_2():
     rospy.init_node('matematico_nodo')
     s = rospy.Service('multiplicar', multiply, handle)
-    print "Service started"
+    rospy.loginfo("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m"+ ": Servicio comenzado")
     rospy.spin()
 
 if __name__ == "__main__":

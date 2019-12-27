@@ -1,9 +1,0 @@
-<launch>
-        <node name="info" pkg="interaccion" type="Info" />
-        <node name="valoration" pkg="interaccion" type="Valoracion" />
-        <node name="posicion" pkg="interaccion" type="Posicion" />
-        <node name="empaquetar" pkg="interaccion" type="empaquetador_nodo" />
-        <node name="pantalla" pkg="interaccion" type="dialogo_nodo" output="screen" launch-prefix="xterm -e" />
-        <node name="servicio2" pkg="interaccion" type="matematico_nodo" />
-        <node name="reloz" pkg="interaccion" type="reloj_nodo" output="screen" launch-prefix="xterm -e" />
-</launch>

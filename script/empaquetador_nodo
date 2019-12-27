@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import rospy
 from std_msgs.msg import String
 from interaccion.msg import pos_usuario
@@ -8,50 +9,39 @@ import config
 
 
 def callback1(data):
-    rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
+    rospy.loginfo("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m"+ " ha recibido una crítica %s","\033[1;36;40m"+str( data.data)+"\033[0m")
     config.sdmg.usuario=data.data
     config.be=True
+    data_ready()
 def callback2(data):
-    rospy.loginfo(rospy.get_caller_id() + "I heard %s", (data.first_name+str(data.age)+str(data.language)))
+    rospy.loginfo("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m"+  " ha recibido un usuario %s", ("\033[1;36;40m"+"nombre:"+data.first_name+" edad: "+str(data.age)+" idiomas:"+str(data.language)+"\033[0m"))
     config.sdmg.inf_personal=data
     config.bi=True
+    data_ready()
 def callback3(data):
-    rospy.loginfo(rospy.get_caller_id() + "I heard %s", (data.x+data.y+data.z))
+    rospy.loginfo("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m"+  " ha recibido una posicion %s", ("\033[1;36;40m"+"x: "+str(data.x)+" y:"+str(data.y)+" z:"+str(data.z)+"\033[0m"))
     config.sdmg.posicion=data
     config.bp=True
+    data_ready()
+def data_ready():
+    if config.bi and config.bp and config.be:
+        rospy.loginfo("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m"+ ": "+"\033[1;36;40m"+ "Enviando valoracion"+"\033[0m")
+        config.pub.publish(config.sdmg)
+        config.sdmg.usuario=None
+        config.sdmg.posicion=None
+        config.sdmg.inf_personal=None
+        config.bi=False
+        config.bp=False
+        config.be=False
 
 def listener():
-    # In ROS, nodes are uniquely named. If two nodes with the same
-    # name are launched, the previous one is kicked off. The
-    # anonymous=True flag means that rospy will choose a unique
-    # name for our 'listener' node so that multiple listeners can
-    # run simultaneously.
-    i=inf_personal_usuario()
-    p=pos_usuario()
-    e=String()
     rospy.init_node('listener', anonymous=True)
     rospy.Subscriber("emocion_topic", String, callback1)
     rospy.Subscriber("inf_pers_topic", inf_personal_usuario, callback2)
     rospy.Subscriber("pos_usuario_topic", pos_usuario, callback3)
-    pub = rospy.Publisher('user_topic', usuario, queue_size=10)
-    rate = rospy.Rate(10)
-    sendms=usuario()
     # spin() simply keeps python from exiting until this node is stopped
-
     while not rospy.is_shutdown():
-        #try:
-        if config.bi and config.bp and config.be:
-            rospy.loginfo(rospy.get_caller_id() + "Sending valoration")
-            pub.publish(config.sdmg)
-            config.sdmg.usuario=None
-            config.sdmg.posicion=None
-            config.sdmg.inf_personal=None
-            config.bi=False
-            config.bp=False
-            config.be=False
-        #except:
-        #    break
-        rate.sleep()
+        rospy.spin()
 
 
 if __name__ == '__main__':

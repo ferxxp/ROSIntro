@@ -1,0 +1,154 @@
+Scatman /n 
+ LALA
+Scatman /n 
+ LALA
+Scatman /n 
+ LALA
+Scatman /n 
+ LALA
+Scatman /n 
+ LALA
+Scatman /n 
+ LALA
+Scatman /n 
+ LALA
+Scatman /n 
+ LALA
+Scatman /n 
+ LALA
+Scatman /n 
+ LALA
+Scatman /n 
+ LALA
+Scatman /n 
+ LALA
+
+Nombre:	Fernando
+
+Edad :	22
+
+Idiomas :
+ESPAÑOL	
+
+INGLES
+
+Se encuentra :	120 / -25 / 89
+
+Opina : 
+Muy chula
+
+
+Número secreto:
+44
+
+______________________
+
+Nombre:	Gema
+
+Edad :	45
+
+Idiomas :
+ESPAÑOL
+
+Se encuentra :	10 / 10 / 10
+
+Opina : 
+Le ha gustado mucho a mi hija.
+
+
+Número secreto:
+90
+
+______________________
+
+Nombre:	Gema
+
+Edad :	45
+
+Idiomas :
+ESPAÑOL
+
+Se encuentra :	10 / 10 / 10
+
+Opina : 
+Le ha gustado mucho a mi hija.
+
+
+Número secreto:
+90
+
+______________________
+
+Nombre:	Gema
+
+Edad :	45
+
+Idiomas :
+ESPAÑOL
+
+Se encuentra :	10 / 10 / 10
+
+Opina : 
+Le ha gustado mucho a mi hija.
+
+
+Número secreto:
+90
+
+______________________
+
+Nombre:	German
+
+Edad :	19
+
+Idiomas :
+ALEMÁN
+
+Se encuentra :	40 / 30 / 20
+
+Opina : 
+Quiero un diez.
+
+
+Número secreto:
+38
+
+______________________
+
+Nombre:	Fernando
+
+Edad :	22
+
+Idiomas :
+ESPAÑOL	
+
+INGLES
+
+Se encuentra :	120 / -25 / 89
+
+Opina : 
+Muy chula
+
+
+Número secreto:
+44
+
+______________________
+
+Nombre:	Gema
+
+Edad :	45
+
+Idiomas :
+ESPAÑOL
+
+Se encuentra :	10 / 10 / 10
+
+Opina : 
+Le ha gustado mucho a mi hija.
+
+
+Número secreto:
+90
+
+______________________

@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 # license removed for brevity
 import rospy
 from Tkinter import *
@@ -9,8 +10,7 @@ from interaccion.msg import pos_usuario
 
 
 def readtext(txt1,txt2,txt3,pub,rospy):
-
-    #
+    #Funcion creada para enviar los datos del formulario al topico correspondiente
     try:
         a=int(txt1.get())
         b=int(txt2.get())
@@ -19,7 +19,7 @@ def readtext(txt1,txt2,txt3,pub,rospy):
         hello_str.x=a
         hello_str.y=b
         hello_str.z=c
-        rospy.loginfo(hello_str)
+        rospy.loginfo("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m"+" envia: "+"\033[1;36;40m"+str(hello_str) +"\033[0m")
         pub.publish(hello_str)
         createMessBox("Success","Datos enviados.")
         txt1.delete('0', END)
@@ -29,13 +29,17 @@ def readtext(txt1,txt2,txt3,pub,rospy):
 
         createMessBox("Error","Por favor compruebe los datos introducidos.")
 def createMessBox(a,b):
+    #funcion para la salida de error o success del envio de la informacion
     tkMessageBox.showinfo(a,b)
 def talker():
+    #main metodo de la aplicación para cumplir estandares
+
+    #inicialización
     pub = rospy.Publisher('pos_usuario_topic', pos_usuario, queue_size=10)
     rospy.init_node('Posicion', anonymous=True)
     rate = rospy.Rate(40) # 40hz
     window = Tk()
-    window.title("Welcome to Info app")
+    window.title("Position app")
     label1=Label(text='Posicion X:')
     label1.grid(column=0, row=0,padx=10, pady=10)
     txt1 = Entry(window,width=10)
@@ -50,6 +54,8 @@ def talker():
     txt3.grid(column=1, row=4,padx=10, pady=10)
     btn = Button(window, text="Enviar", command= lambda:readtext(txt1,txt2,txt3,pub,rospy))
     btn.grid(column=1, row=6,padx=10, pady=10)
+
+    #loop de la aplicación
     while not rospy.is_shutdown():
         try:
             window.update()

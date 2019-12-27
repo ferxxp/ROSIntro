@@ -1,0 +1,7 @@
+string goal_msg
+---
+string result_msg
+bool result_bool
+---
+string line_printing
+uint16 percent_complete
