@@ -1,6 +1,6 @@
 <launch>
   <node name="empaquetar" pkg="interaccion" type="empaquetador_nodo" output="screen" launch-prefix="xterm -e"/>
-    <arg name="path" default="/home/fernando/catkin_ws/" />
+    <arg name="path" default="$(find interaccion)/include/" />
     <arg name="file_1" default="tester" />
     <node pkg="rosbag" type="play" name="player" output="screen" args="--clock -r 10 $(arg path)$(arg file_1).bag "/>  />
   </launch>
