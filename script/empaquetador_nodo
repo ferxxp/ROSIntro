@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 import rospy
 from std_msgs.msg import String
-from interaccion.msg import pos_usuario
-from interaccion.msg import inf_personal_usuario
-from interaccion.msg import usuario
+from ROSIntro.msg import pos_usuario
+from ROSIntro.msg import inf_personal_usuario
+from ROSIntro.msg import usuario
 import config
 
 
@@ -36,6 +36,7 @@ def data_ready():
 
 def listener():
     rospy.init_node('listener', anonymous=True)
+    rospy.loginfo("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m"+" Inicio del empaquetador.")
     rospy.Subscriber("emocion_topic", String, callback1)
     rospy.Subscriber("inf_pers_topic", inf_personal_usuario, callback2)
     rospy.Subscriber("pos_usuario_topic", pos_usuario, callback3)

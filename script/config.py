@@ -1,4 +1,4 @@
-from interaccion.msg import usuario
+from ROSIntro.msg import usuario
 import rospy
 sdmg=usuario()
 bi=False

@@ -1,7 +1,7 @@
 <launch>
-        <node name="info" pkg="interaccion" type="Info" output="screen"/>
-        <node name="valoration" pkg="interaccion" type="Valoracion" output="screen"/>
-        <node name="posicion" pkg="interaccion" type="Posicion" output="screen"/>
+        <node name="info" pkg="ROSIntro" type="Info" output="screen"/>
+        <node name="valoration" pkg="ROSIntro" type="Valoracion" output="screen"/>
+        <node name="posicion" pkg="ROSIntro" type="Posicion" output="screen"/>
         <node pkg="rostopic" type="rostopic" name="displayer1" output="screen" args=" echo /inf_pers_topic " launch-prefix="xterm -e"/>
         <node pkg="rostopic" type="rostopic" name="displayer2" output="screen" args=" echo /pos_usuario_topic " launch-prefix="xterm -e"/>
         <node pkg="rostopic" type="rostopic" name="displayer3" output="screen" args=" echo /emocion_topic " launch-prefix="xterm -e"/>

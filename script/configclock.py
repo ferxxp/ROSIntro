@@ -1,5 +1,5 @@
 import rospy
-from interaccion.msg import usuario
+from ROSIntro.msg import usuario
 from std_msgs.msg import String
 sent_first_message=False
 msgclock=String()

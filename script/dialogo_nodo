@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 import rospy
 from std_msgs.msg import String, Bool
-from interaccion.msg import *
-from interaccion.srv import multiply
+from ROSIntro.msg import *
+from ROSIntro.srv import multiply
 import actionlib
 import configclock
 import os
@@ -85,6 +85,7 @@ def callback2(data):
 
 def screen():
     rospy.init_node('screen', anonymous=True)
+    rospy.loginfo("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m"+" Inicio del nodo de salida por pantalla.")
     rospy.Subscriber("user_topic", usuario, callback1)
     rospy.Subscriber("still_alive", Bool, callback2)
     global actionlibclient

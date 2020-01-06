@@ -35,6 +35,7 @@ def callback2(data):
 
 def clockstarting():
     rospy.init_node('clock', anonymous=True)
+    rospy.loginfo("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m"+" Inicio del reloj.")
     global timerpy
     timerpy=None
     rospy.Subscriber("start_topic", String, callback2)

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from interaccion.srv import multiply
+from ROSIntro.srv import multiply
 import rospy
 
 def handle(req):
@@ -11,7 +11,7 @@ def handle(req):
 def multiply_per_2():
     rospy.init_node('matematico_nodo')
     s = rospy.Service('multiplicar', multiply, handle)
-    rospy.loginfo("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m"+ ": Servicio comenzado")
+    rospy.loginfo("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m"+ ": Servicio matematico iniciado.")
     rospy.spin()
 
 if __name__ == "__main__":

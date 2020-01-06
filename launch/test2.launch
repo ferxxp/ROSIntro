@@ -1,6 +1,6 @@
 <launch>
-        <node name="info" pkg="interaccion" type="Info" output="screen"/>
-        <node name="valoration" pkg="interaccion" type="Valoracion" output="screen"/>
-        <node name="posicion" pkg="interaccion" type="Posicion" output="screen"/>
-        <node name="empaquetar" pkg="interaccion" type="empaquetador_nodo" output="screen" launch-prefix="xterm -e"  />
+        <node name="info" pkg="ROSIntro" type="Info" output="screen"/>
+        <node name="valoration" pkg="ROSIntro" type="Valoracion" output="screen"/>
+        <node name="posicion" pkg="ROSIntro" type="Posicion" output="screen"/>
+        <node name="empaquetar" pkg="ROSIntro" type="empaquetador_nodo" output="screen" launch-prefix="xterm -e"  />
 </launch>

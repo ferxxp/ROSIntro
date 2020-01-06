@@ -1,9 +1,9 @@
 <launch>
-  <arg name="path" default="$(find interaccion)/include/" />
+  <arg name="path" default="$(find ROSIntro)/include/" />
   <arg name="file_1" default="tester" />
   <node pkg="rosbag" type="play" name="player" output="screen" args="--clock -r 0.5 $(arg path)$(arg file_1).bag " launch-prefix="xterm -e" />
-  <node name="empaquetar" pkg="interaccion" type="empaquetador_nodo" />
-  <node name="pantalla" pkg="interaccion" type="dialogo_nodo" output="screen" launch-prefix="xterm -e" />
-  <node name="servicio2" pkg="interaccion" type="matematico_nodo" />
-  <node name="reloz" pkg="interaccion" type="reloj_nodo" output="screen" launch-prefix="xterm -e" />
+  <node name="empaquetar" pkg="ROSIntro" type="empaquetador_nodo" />
+  <node name="pantalla" pkg="ROSIntro" type="dialogo_nodo" output="screen" launch-prefix="xterm -e" />
+  <node name="servicio2" pkg="ROSIntro" type="matematico_nodo" />
+  <node name="reloz" pkg="ROSIntro" type="reloj_nodo" output="screen" launch-prefix="xterm -e" />
 </launch>

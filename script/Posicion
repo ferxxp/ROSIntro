@@ -5,7 +5,7 @@ import rospy
 from Tkinter import *
 import tkMessageBox
 import ScrolledText as sct
-from interaccion.msg import pos_usuario
+from ROSIntro.msg import pos_usuario
 
 
 
@@ -35,8 +35,9 @@ def talker():
     #main metodo de la aplicación para cumplir estandares
 
     #inicialización
-    pub = rospy.Publisher('pos_usuario_topic', pos_usuario, queue_size=10)
     rospy.init_node('Posicion', anonymous=True)
+    rospy.loginfo("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m"+" Inicio de la pantalla de posición.")
+    pub = rospy.Publisher('pos_usuario_topic', pos_usuario, queue_size=10)
     rate = rospy.Rate(40) # 40hz
     window = Tk()
     window.title("Position app")

@@ -26,8 +26,9 @@ def createMessBox(a,b):
     tkMessageBox.showinfo(a,b)
 def talker():
     #inicialización
-    pub = rospy.Publisher('emocion_topic', String, queue_size=10)
     rospy.init_node('Valoracion', anonymous=True)
+    rospy.loginfo("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m"+" Inicio de la pantalla de Valorion/Emoción.")
+    pub = rospy.Publisher('emocion_topic', String, queue_size=10)
     rate = rospy.Rate(40) # 40hz
     window = Tk()
     window.title("Review app")

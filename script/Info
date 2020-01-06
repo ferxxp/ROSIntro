@@ -5,7 +5,7 @@ import rospy
 from Tkinter import *
 import tkMessageBox
 import ScrolledText as sct
-from interaccion.msg import inf_personal_usuario
+from ROSIntro.msg import inf_personal_usuario
 
 
 
@@ -40,8 +40,9 @@ def createMessBox(a,b):
 def talker():
     #main metodo de la aplicación para cumplir estandares
     #inicialización
-    pub = rospy.Publisher('inf_pers_topic', inf_personal_usuario, queue_size=10)
     rospy.init_node('info', anonymous=True)
+    rospy.loginfo("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m"+" Inicio de la pantala de información personal.")
+    pub = rospy.Publisher('inf_pers_topic', inf_personal_usuario, queue_size=10)
     rate = rospy.Rate(40) # 40hz
     window = Tk()
     window.title("Personal info app")

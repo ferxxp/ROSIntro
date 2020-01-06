@@ -6,7 +6,7 @@ import roslib
 import rospy
 import actionlib
 
-from interaccion.msg import *
+from ROSIntro.msg import *
 
 if __name__ == '__main__':
     rospy.init_node('do_dishes_client')
