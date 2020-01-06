@@ -6,5 +6,6 @@
   <node name="pantalla" pkg="ROSIntro" type="dialogo_nodo" output="screen" launch-prefix="xterm -e" />
   <node name="servicio2" pkg="ROSIntro" type="matematico_nodo" />
   <node name="reloj" pkg="ROSIntro" type="reloj_nodo" output="screen" launch-prefix="xterm -e" />
-  <node name="impresora" pkg="ROSIntro" type="writefileserver" output="screen" launch-prefix="xterm -e" />
+  <arg name="file_printer" default="$(find ROSIntro)/include/" />
+  <node name="impresora" pkg="ROSIntro" type="writefileserver" args="$(arg file_printer)" output="screen" launch-prefix="xterm -e" />
 </launch>

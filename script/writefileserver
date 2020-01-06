@@ -5,17 +5,20 @@
 import roslib
 import rospy
 import actionlib
+import sys
 
 from ROSIntro.msg import *
 
 class Printer:
-  def __init__(self):
+  def __init__(self,path):
+    self.path=path
     self.server = actionlib.SimpleActionServer('Printer_server', Actio1Action, self.execute, False)
     self.server.start()
 
   def execute(self, goal):
     rospy.loginfo("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m"+" Comienza respuesta a peticion:"+"\033[1;36;40m"+goal.goal_msg+"\033[0m")
-    f=open("Print.txt","a")
+    print self.path
+    f=open(self.path+"print.txt","a")
     a=Actio1Feedback()
     b=Actio1Result()
     r = rospy.Rate(1)
@@ -45,6 +48,11 @@ class Printer:
 
 if __name__ == '__main__':
   rospy.init_node('Printer_server')
+  if len(sys.argv) < 1:
+      #print sys.argv
+     rospy.loginfo("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m"+"No se ha pasdo directorio.")
+  else:
+      rospy.loginfo("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m"+" Inicio del servicio de impresión en:"+ sys.argv[1])
   rospy.loginfo("\033[1;32;40m"+rospy.get_caller_id() +"\033[0m"+" Inicio del servicio de impresión.")
-  server = Printer()
+  server = Printer(str(sys.argv[1]))
   rospy.spin()
